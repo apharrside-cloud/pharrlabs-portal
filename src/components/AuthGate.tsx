@@ -5,7 +5,8 @@ interface AuthGateProps {
   onUnlock: () => void
 }
 
-const VALID_CODES = ['882400', '8824']
+const VALID_CODE = '882400'
+const REQUIRED_PIN_LENGTH = 6
 
 export const AuthGate: React.FC<AuthGateProps> = ({ onUnlock }) => {
   const [pin, setPin] = useState('')
@@ -14,14 +15,16 @@ export const AuthGate: React.FC<AuthGateProps> = ({ onUnlock }) => {
   const [useTextInput, setUseTextInput] = useState(false)
 
   const handleDigit = (digit: string) => {
-    if (pin.length < 8) {
+    if (pin.length < REQUIRED_PIN_LENGTH) {
       const nextPin = pin + digit
       setPin(nextPin)
       setError(false)
-      if (VALID_CODES.includes(nextPin.toLowerCase())) {
-        successUnlock()
-      } else if (nextPin.length === 6) {
-        triggerError()
+      if (nextPin.length === REQUIRED_PIN_LENGTH) {
+        if (nextPin === VALID_CODE) {
+          successUnlock()
+        } else {
+          triggerError()
+        }
       }
     }
   }
@@ -33,7 +36,7 @@ export const AuthGate: React.FC<AuthGateProps> = ({ onUnlock }) => {
 
   const handleTextSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (VALID_CODES.includes(pin.trim().toLowerCase())) {
+    if (pin.trim() === VALID_CODE) {
       successUnlock()
     } else {
       triggerError()
