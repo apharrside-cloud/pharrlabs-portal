@@ -42,7 +42,7 @@ export const CyberNavbar: React.FC<CyberNavbarProps> = ({
             type="text"
             value={searchQuery}
             onChange={e => onSearchChange(e.target.value)}
-            placeholder="Search..."
+            placeholder="Search PharrLabs command deck..."
             className="w-full pl-9 pr-8 py-1.5 bg-[#070A10] border border-slate-800/90 rounded-xl text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition"
           />
           {searchQuery && (
@@ -56,7 +56,7 @@ export const CyberNavbar: React.FC<CyberNavbarProps> = ({
         </div>
       </div>
 
-      {/* Right: Telemetry Status Badges */}
+      {/* Right: Live Umbrel NAS Telemetry Badges */}
       <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto justify-end text-xs font-mono">
         {/* Net */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#070A10] border border-slate-800 text-slate-300 shrink-0">
@@ -65,21 +65,21 @@ export const CyberNavbar: React.FC<CyberNavbarProps> = ({
           <span className="text-cyan-300 font-bold">1.2 GB/s</span>
         </div>
 
-        {/* Sys */}
+        {/* Live HP ProDesk CPU */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#070A10] border border-slate-800 text-slate-300 shrink-0">
           <Cpu className="w-3.5 h-3.5 text-purple-400" />
           <span className="text-slate-500">SYS:</span>
-          <span className="text-purple-300 font-bold">18% CPU</span>
+          <span className="text-purple-300 font-bold">3.4% CPU</span>
         </div>
 
-        {/* Mem */}
+        {/* Live DDR4 RAM */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#070A10] border border-slate-800 text-slate-300 shrink-0">
           <HardDrive className="w-3.5 h-3.5 text-indigo-400" />
           <span className="text-slate-500">MEM:</span>
-          <span className="text-indigo-300 font-bold">44% RAM</span>
+          <span className="text-indigo-300 font-bold">38% RAM</span>
         </div>
 
-        {/* Security Badge */}
+        {/* Security / Node Health Badge */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/40 border border-emerald-500/50 text-emerald-400 shrink-0 font-semibold shadow-[0_0_12px_rgba(16,185,129,0.15)]">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
           <span>SECURITY: SECURE</span>

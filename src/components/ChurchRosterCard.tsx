@@ -11,31 +11,32 @@ interface MemberRow {
   avatar: string
 }
 
+// Real Central Union worship & ministerial leadership
 const ROSTER_MEMBERS: MemberRow[] = [
   {
-    name: 'Pastor David L.',
-    role: 'Pastor',
+    name: 'Mark Casella',
+    role: 'Preacher & Minister',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80',
   },
   {
-    name: 'Elder Sarah M.',
-    role: 'Elder',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&auto=format&fit=crop&q=80',
-  },
-  {
-    name: 'Chris Marrk.',
-    role: 'Professor',
+    name: 'Scott Slauson',
+    role: 'Song & Worship Leader',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80',
   },
   {
-    name: 'Sarah Eulor',
-    role: 'Elder',
+    name: 'Chance Hornbeck',
+    role: "Lord's Supper Leader",
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&auto=format&fit=crop&q=80',
   },
   {
-    name: 'Elder Sarah M.',
-    role: 'Ministry',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&auto=format&fit=crop&q=80',
+    name: 'Kevin Kitchen',
+    role: 'Back Server & Deacon',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&auto=format&fit=crop&q=80',
+  },
+  {
+    name: 'Andrew Pharr',
+    role: 'Sunday Tech Ministry',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80',
   },
 ]
 
@@ -71,7 +72,7 @@ export const ChurchRosterCard: React.FC<ChurchRosterCardProps> = ({ app }) => {
       <div className="flex-1 flex flex-col justify-center">
         {/* Table Header */}
         <div className="grid grid-cols-12 text-xs font-semibold text-slate-400 pb-2 border-b border-slate-800 px-1">
-          <span className="col-span-6">Ministry</span>
+          <span className="col-span-6">Ministry Member</span>
           <span className="col-span-4 text-center">Role</span>
           <span className="col-span-2 text-right">Active</span>
         </div>
@@ -87,13 +88,13 @@ export const ChurchRosterCard: React.FC<ChurchRosterCardProps> = ({ app }) => {
                   alt={member.name}
                   className="w-6 h-6 rounded-full object-cover border border-slate-700 shrink-0"
                 />
-                <span className="text-xs font-medium text-slate-200 truncate">
+                <span className="text-xs font-medium text-slate-200 truncate" title={member.name}>
                   {member.name}
                 </span>
               </div>
 
               {/* Role */}
-              <div className="col-span-4 text-center text-xs text-slate-400">
+              <div className="col-span-4 text-center text-[11px] text-slate-400 truncate" title={member.role}>
                 {member.role}
               </div>
 

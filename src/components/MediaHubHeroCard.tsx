@@ -12,31 +12,32 @@ interface TrendingPoster {
   imageUrl: string
 }
 
+// Real titles from Andrew's Jellyfin media server
 const TRENDING_POSTERS: TrendingPoster[] = [
   {
-    title: 'Nova Drift',
-    label: 'Nova Drift',
-    imageUrl: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?w=600&auto=format&fit=crop&q=80', // Cosmic nebula
+    title: 'The Avengers',
+    label: 'The Avengers',
+    imageUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80',
   },
   {
-    title: 'Aeon Flux',
-    label: 'Aeon Flux',
-    imageUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80', // Cyberpunk heroine vibe
+    title: 'Blade Runner 2049',
+    label: 'Blade Runner 2049',
+    imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80',
   },
   {
-    title: 'The Peripheral',
-    label: 'The Peripheral',
-    imageUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80', // Sci-fi portrait
+    title: 'Everything Everywhere All at Once',
+    label: 'Everything Everywhere',
+    imageUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80',
   },
   {
-    title: 'Nova Drift',
-    label: 'Nova Drift',
-    imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&auto=format&fit=crop&q=80', // Astronaut in deep space
+    title: 'Tenet',
+    label: 'Tenet',
+    imageUrl: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?w=600&auto=format&fit=crop&q=80',
   },
   {
-    title: 'The Sandman',
-    label: 'The Sandman',
-    imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80', // Mysterious dark silhouette
+    title: 'Ted Lasso',
+    label: 'Ted Lasso',
+    imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&auto=format&fit=crop&q=80',
   },
 ]
 
@@ -69,10 +70,11 @@ export const MediaHubHeroCard: React.FC<MediaHubHeroCardProps> = ({ app }) => {
       </div>
 
       {/* Subheading */}
-      <div className="mb-3.5">
+      <div className="mb-3.5 flex items-center justify-between">
         <h3 className="text-sm font-semibold text-slate-200 tracking-wide">
-          Trending Poster
+          Trending Jellyfin Library
         </h3>
+        <span className="text-[11px] font-mono text-cyan-400/80">1080p / 4K HDR</span>
       </div>
 
       {/* 5-Poster Row */}
@@ -93,9 +95,9 @@ export const MediaHubHeroCard: React.FC<MediaHubHeroCardProps> = ({ app }) => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
 
-              {/* Red 'N' Netflix style tag */}
-              <div className="absolute top-1.5 left-1.5 font-black text-rose-500 text-[11px] leading-none drop-shadow-md">
-                N
+              {/* HD Tag */}
+              <div className="absolute top-1.5 left-1.5 font-bold text-cyan-400 text-[10px] leading-none drop-shadow-md bg-black/60 px-1 py-0.5 rounded">
+                4K
               </div>
 
               {/* Play Button Overlay */}
@@ -107,7 +109,7 @@ export const MediaHubHeroCard: React.FC<MediaHubHeroCardProps> = ({ app }) => {
             </div>
 
             {/* Poster Label */}
-            <span className="mt-2 text-[11px] font-medium text-slate-300 text-center truncate group-hover/poster:text-cyan-300 transition">
+            <span className="mt-2 text-[11px] font-medium text-slate-300 text-center truncate group-hover/poster:text-cyan-300 transition" title={poster.title}>
               {poster.label}
             </span>
           </a>

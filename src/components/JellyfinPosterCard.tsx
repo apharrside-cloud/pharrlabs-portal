@@ -7,21 +7,26 @@ interface JellyfinPosterCardProps {
 
 interface MoviePoster {
   title: string
+  year: string
   imageUrl: string
 }
 
+// Real titles from Andrew's Jellyfin media library
 const MOVIES: MoviePoster[] = [
   {
-    title: 'Interstellar',
-    imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80',
-  },
-  {
-    title: 'Dune',
-    imageUrl: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&auto=format&fit=crop&q=80',
-  },
-  {
     title: 'Blade Runner 2049',
+    year: '2017',
     imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80',
+  },
+  {
+    title: 'Tenet',
+    year: '2020',
+    imageUrl: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?w=600&auto=format&fit=crop&q=80',
+  },
+  {
+    title: 'Everything Everywhere',
+    year: '2022',
+    imageUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80',
   },
 ]
 
@@ -71,12 +76,15 @@ export const JellyfinPosterCard: React.FC<JellyfinPosterCardProps> = ({ app }) =
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               {/* Cinematic Bottom Banner Title */}
-              <div className="absolute bottom-2 inset-x-1 text-center font-heading font-extrabold text-[10px] tracking-wider text-white uppercase drop-shadow-md">
+              <div className="absolute bottom-2 inset-x-1 text-center font-heading font-extrabold text-[9px] tracking-wider text-white uppercase drop-shadow-md">
                 {movie.title}
               </div>
             </div>
-            <span className="mt-2 text-xs font-medium text-slate-300 text-center truncate group-hover/poster:text-purple-300 transition">
+            <span className="mt-2 text-xs font-medium text-slate-300 text-center truncate group-hover/poster:text-purple-300 transition" title={movie.title}>
               {movie.title}
+            </span>
+            <span className="text-[10px] font-mono text-purple-400/80 text-center">
+              {movie.year}
             </span>
           </a>
         ))}
