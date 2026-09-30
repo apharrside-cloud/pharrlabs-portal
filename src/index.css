@@ -45,3 +45,58 @@
 .glow-emerald {
   box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.25);
 }
+
+/* ---------- Cyber Command Deck tokens ---------- */
+/* One neon card primitive: set --neon (space-separated r g b) per card; glow and hover derive from it. */
+.neon-card {
+  border: 2px solid rgb(var(--neon));
+  box-shadow: 0 0 30px rgb(var(--neon) / 0.22), inset 0 0 40px rgb(var(--neon) / 0.03);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+@media (hover: hover) {
+  .neon-card:hover {
+    box-shadow: 0 0 46px rgb(var(--neon) / 0.40), inset 0 0 50px rgb(var(--neon) / 0.06);
+    transform: translateY(-2px);
+  }
+}
+
+/* Keyframes that components already reference: animate-shake and animate-fade-in
+   had no definition anywhere, so they were silent no-ops. */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes scan {
+  from { transform: translateY(-120px); }
+  to   { transform: translateY(100vh); }
+}
+.animate-shake   { animation: shake 0.45s ease-in-out; }
+.animate-fade-in { animation: fade-in 0.35s ease-out both; }
+
+/* Staggered entrance: set --i on each grid child. */
+.deck-enter { animation: fade-in 0.5s ease-out both; animation-delay: calc(var(--i, 0) * 70ms); }
+
+/* One faint scanline sweep across the whole deck. Pure CSS, compositor-only. */
+.deck-scan::after {
+  content: ''; position: fixed; left: 0; right: 0; top: 0; height: 120px; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgb(34 211 238 / 0.035), transparent);
+  animation: scan 9s linear infinite; z-index: 5;
+}
+
+/* Respect users who ask for less motion (pulses, sweeps, lifts). */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important; scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus everywhere (the cards are links). */
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid rgb(34 211 238); outline-offset: 2px; border-radius: 0.75rem;
+}

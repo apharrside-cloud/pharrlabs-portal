@@ -1,9 +1,6 @@
-import React from 'react'
+import { Church } from 'lucide-react'
 import type { AppItem } from '../types'
-
-interface ChurchRosterCardProps {
-  app: AppItem
-}
+import { CardShell } from './ui/CardShell'
 
 interface MemberRow {
   name: string
@@ -46,34 +43,9 @@ const ROSTER_MEMBERS: MemberRow[] = [
   },
 ]
 
-export const ChurchRosterCard: React.FC<ChurchRosterCardProps> = ({ app }) => {
+export function ChurchRosterCard({ app, index }: { app: AppItem; index?: number }) {
   return (
-    <div className="h-full rounded-3xl bg-[#0C101A]/95 border-2 border-amber-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(251,191,36,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(251,191,36,0.35)]">
-      {/* Top Header Row */}
-      <div className="flex items-center justify-between mb-2">
-        <a
-          href={app.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2.5 group"
-        >
-          <div className="w-8 h-8 rounded-xl bg-[#111726] border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-inner group-hover:scale-105 transition">
-            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
-              <path d="M12 2v3m-2-1.5h4M12 5L4 10v11h16V10l-8-5zm-2 9v7h4v-7a2 2 0 0 0-4 0z" />
-            </svg>
-          </div>
-          <span className="font-heading font-bold text-white text-base tracking-wide group-hover:text-amber-300 transition">
-            Central Union Hub
-          </span>
-        </a>
-
-        {/* Active Badge */}
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#111726] border border-emerald-500/30 text-emerald-400 text-xs font-mono">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Active</span>
-        </div>
-      </div>
-
+    <CardShell app={app} title="Central Union Hub" neon="amber" index={index} icon={<Church className="w-4 h-4" />}>
       {/* Roster Table */}
       <div className="flex-1 flex flex-col justify-around py-1">
         {/* Table Header */}
@@ -110,6 +82,6 @@ export const ChurchRosterCard: React.FC<ChurchRosterCardProps> = ({ app }) => {
           ))}
         </div>
       </div>
-    </div>
+    </CardShell>
   )
 }

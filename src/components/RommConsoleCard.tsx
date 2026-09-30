@@ -1,10 +1,6 @@
-import React from 'react'
 import { Gamepad2 } from 'lucide-react'
 import type { AppItem } from '../types'
-
-interface RommConsoleCardProps {
-  app: AppItem
-}
+import { CardShell } from './ui/CardShell'
 
 interface ConsoleCard {
   label: string
@@ -19,32 +15,9 @@ const CONSOLES: ConsoleCard[] = [
   { label: 'Sega Genesis', sublabel: 'Classics Ready', consoleType: 'genesis' },
 ]
 
-export const RommConsoleCard: React.FC<RommConsoleCardProps> = ({ app }) => {
+export function RommConsoleCard({ app, index }: { app: AppItem; index?: number }) {
   return (
-    <div className="h-full rounded-3xl bg-[#0C101A]/95 border-2 border-sky-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(56,189,248,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(56,189,248,0.35)]">
-      {/* Top Header Row */}
-      <div className="flex items-center justify-between mb-4">
-        <a
-          href={app.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2.5 group"
-        >
-          <div className="w-8 h-8 rounded-xl bg-[#111726] border border-sky-500/40 flex items-center justify-center text-sky-400 shadow-inner group-hover:scale-105 transition">
-            <Gamepad2 className="w-4 h-4" />
-          </div>
-          <span className="font-heading font-bold text-white text-base tracking-wide group-hover:text-sky-300 transition">
-            RomM Retro Games
-          </span>
-        </a>
-
-        {/* Active Badge */}
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#111726] border border-emerald-500/30 text-emerald-400 text-xs font-mono">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Active</span>
-        </div>
-      </div>
-
+    <CardShell app={app} title="RomM Retro Games" neon="sky" index={index} icon={<Gamepad2 className="w-4 h-4" />}>
       {/* 3 Retro Controller Tiles */}
       <div className="grid grid-cols-3 gap-3 my-auto">
         {CONSOLES.map((c, idx) => (
@@ -53,7 +26,7 @@ export const RommConsoleCard: React.FC<RommConsoleCardProps> = ({ app }) => {
             href={app.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/console flex flex-col cursor-pointer"
+            className="group/console flex flex-col"
           >
             <div className="relative aspect-square w-full rounded-2xl bg-[#070A12] border border-slate-800 flex items-center justify-center p-3 group-hover/console:border-sky-400/80 transition-all duration-300 shadow-inner group-hover/console:scale-[1.03]">
               {c.consoleType === 'snes' && (
@@ -102,12 +75,12 @@ export const RommConsoleCard: React.FC<RommConsoleCardProps> = ({ app }) => {
             <span className="mt-2 text-xs font-semibold text-slate-200 text-center truncate group-hover/console:text-sky-300 transition">
               {c.label}
             </span>
-            <span className="text-[10px] font-mono text-cyan-400 text-center">
+            <span className="text-[11px] font-mono text-sky-300 text-center">
               {c.sublabel}
             </span>
           </a>
         ))}
       </div>
-    </div>
+    </CardShell>
   )
 }
