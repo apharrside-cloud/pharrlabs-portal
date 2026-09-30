@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
 import { INITIAL_APPS } from './data/apps'
-import type { AppItem, AppCategory } from './types'
+import type { AppItem } from './types'
 import { AuthGate } from './components/AuthGate'
-import { Header } from './components/Header'
-import { TelemetryBanner } from './components/TelemetryBanner'
+import { CyberNavbar } from './components/CyberNavbar'
+import { MediaHubHeroCard } from './components/MediaHubHeroCard'
+import { TradingCandleCard } from './components/TradingCandleCard'
+import { ChurchRosterCard } from './components/ChurchRosterCard'
+import { JellyfinPosterCard } from './components/JellyfinPosterCard'
+import { AudiobookshelfCard } from './components/AudiobookshelfCard'
+import { RommConsoleCard } from './components/RommConsoleCard'
 import { CyberAppCard } from './components/CyberAppCard'
-import { MediaHubBento } from './components/MediaHubBento'
-import { TradingBento } from './components/TradingBento'
-import { ChurchBento } from './components/ChurchBento'
-import { RommBentoCard, JellyfinBentoCard, AudiobookshelfBentoCard } from './components/MediaCardsBento'
-import { ShieldCheck, Layers, Terminal } from 'lucide-react'
+import { Layers, ShieldCheck, Terminal } from 'lucide-react'
 
 export function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
@@ -29,10 +30,9 @@ export function App() {
 
   const [apps, setApps] = useState<AppItem[]>(INITIAL_APPS)
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<AppCategory>('all')
   const [isRefreshing, setIsRefreshing] = useState(false)
 
-  // Real client-side latency ping probe
+  // Client-side latency ping probe
   const pingApplications = async () => {
     setIsRefreshing(true)
     const updated = await Promise.all(
@@ -76,163 +76,152 @@ export function App() {
     return <AuthGate onUnlock={() => setIsAuthenticated(true)} />
   }
 
-  // Filter apps based on search query and category
-  const filteredApps = apps.filter(app => {
-    const matchesSearch =
-      searchQuery === '' ||
-      app.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.shortcuts.some(sc => sc.label.toLowerCase().includes(searchQuery.toLowerCase()))
+  // App quick lookup helpers
+  const getApp = (id: string): AppItem => {
+    return apps.find(a => a.id === id) || INITIAL_APPS.find(a => a.id === id)!
+  }
 
-    const matchesCategory =
-      selectedCategory === 'all' ||
-      (selectedCategory === 'featured' && app.isFeatured) ||
-      app.category === selectedCategory
+  // Filter apps when search query is entered
+  const isSearchActive = searchQuery.trim().length > 0
+  const searchResults = isSearchActive
+    ? apps.filter(
+        app =>
+          app.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          app.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          app.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          app.shortcuts.some(sc => sc.label.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+    : []
 
-    return matchesSearch && matchesCategory
-  })
-
-  const onlineCount = apps.filter(a => a.status === 'online').length
-  const totalCount = apps.length
-  const avgLatency = Math.round(
-    apps.reduce((acc, curr) => acc + (curr.latencyMs || 22), 0) / apps.length
-  )
-
-  // Quick lookup helper for specialized Bento cards
-  const getAppById = (id: string) => apps.find(a => a.id === id) || INITIAL_APPS.find(a => a.id === id)!
-
-  const isBentoDefaultView = selectedCategory === 'all' && searchQuery.trim() === ''
+  const secondaryApps = [
+    getApp('family-hub'),
+    getApp('booklore'),
+    getApp('umbrel-dashboard'),
+    getApp('super-cos'),
+    getApp('bible-library'),
+    getApp('growing-up-wild'),
+  ].filter(Boolean)
 
   return (
-    <div className="min-h-screen bg-[#060911] text-slate-100 flex flex-col selection:bg-cyan-500/20 selection:text-cyan-300 relative overflow-x-hidden font-sans">
-      {/* Background Cyber Grid Lines */}
-      <div className="fixed inset-0 bg-[linear-gradient(to_right,#1f293d0a_1px,transparent_1px),linear-gradient(to_bottom,#1f293d0a_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+    <div className="min-h-screen bg-[#070A10] text-slate-100 flex flex-col selection:bg-cyan-500/20 selection:text-cyan-300 relative overflow-x-hidden font-sans p-3 sm:p-5 lg:p-6">
+      {/* Background Cyber Tech Grid */}
+      <div className="fixed inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] opacity-25 pointer-events-none" />
 
-      {/* Sticky Mission Control Header */}
-      <Header
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        selectedCategory={selectedCategory}
-        onCategorySelect={setSelectedCategory}
-        onLock={handleLock}
-        onRefreshPings={pingApplications}
-        isRefreshing={isRefreshing}
-        onlineCount={onlineCount}
-        totalCount={totalCount}
-      />
-
-      {/* Main Content Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 relative z-10">
-        {/* Telemetry Banner */}
-        <TelemetryBanner
-          onlineCount={onlineCount}
-          totalCount={totalCount}
-          avgLatency={avgLatency}
+      {/* Main Container */}
+      <div className="max-w-[1520px] w-full mx-auto relative z-10 flex flex-col flex-1">
+        {/* Floating Cyber Command Navbar */}
+        <CyberNavbar
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          onRefresh={pingApplications}
+          onLock={handleLock}
+          isRefreshing={isRefreshing}
         />
 
-        {/* Section Title & Subheading */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-cyan-950/70 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
-              <Terminal className="w-4 h-4" />
-            </div>
-            <div>
-              <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white font-heading uppercase">
-                {selectedCategory === 'all' ? 'Cyber Command Matrix' : `${selectedCategory.toUpperCase()} SUBSYSTEMS`}
+        {/* Content Area */}
+        {isSearchActive ? (
+          /* Search Results Grid */
+          <div className="flex-1">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-mono text-cyan-400">
+                SEARCH RESULTS FOR &quot;{searchQuery}&quot; ({searchResults.length})
               </h2>
-              <p className="text-[11px] font-mono text-slate-400">
-                {isBentoDefaultView
-                  ? 'Bento-grid orchestrating 12 active self-hosted services & Edge endpoints'
-                  : `Filtered view displaying ${filteredApps.length} active service nodes`}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono text-slate-400">STATUS:</span>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-950 border border-cyan-500/30 text-cyan-300">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>NODE VERIFIED 882400</span>
-            </span>
-          </div>
-        </div>
-
-        {/* Asymmetric Cyber Bento Grid (Default View) */}
-        {isBentoDefaultView ? (
-          <div className="space-y-6">
-            {/* Top Showcase Bento Row: Media Hub (2 cols) + Alpha Crucible (1 col) */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <MediaHubBento app={getAppById('media-hub')} />
-              <TradingBento app={getAppById('alpha-crucible')} />
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-xs font-mono text-slate-400 hover:text-white"
+              >
+                Clear Search ✕
+              </button>
             </div>
 
-            {/* Middle Specialized Media & Ministry Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <ChurchBento app={getAppById('cucoc-hub')} />
-              <RommBentoCard app={getAppById('romm-games')} />
-              <JellyfinBentoCard app={getAppById('jellyfin-movies')} />
-            </div>
-
-            {/* Bottom Grid: Audiobookshelf, Family Hub, BookLore, Umbrel, CoS, Bible, Growing Up Wild */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <AudiobookshelfBentoCard app={getAppById('audiobookshelf')} />
-              <CyberAppCard app={getAppById('family-hub')} />
-              <CyberAppCard app={getAppById('booklore')} />
-              <CyberAppCard app={getAppById('umbrel-dashboard')} />
-              <CyberAppCard app={getAppById('super-cos')} />
-              <CyberAppCard app={getAppById('bible-library')} />
-              <CyberAppCard app={getAppById('growing-up-wild')} />
-            </div>
-          </div>
-        ) : filteredApps.length > 0 ? (
-          /* Standard Filtered Grid */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {filteredApps.map(app => (
-              <CyberAppCard key={app.id} app={app} />
-            ))}
+            {searchResults.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {searchResults.map(app => (
+                  <CyberAppCard key={app.id} app={app} />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-3xl border border-slate-800 bg-[#0C101A]/90 p-12 text-center max-w-md mx-auto my-12">
+                <Layers className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                <h3 className="text-lg font-bold text-white mb-1">No services found</h3>
+                <p className="text-xs text-slate-400 mb-4 font-mono">
+                  No matching services or tools for &quot;{searchQuery}&quot;.
+                </p>
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold font-mono transition"
+                >
+                  Reset Search
+                </button>
+              </div>
+            )}
           </div>
         ) : (
-          /* Empty Search Fallback */
-          <div className="rounded-3xl border border-cyan-500/20 bg-slate-950/70 p-12 text-center max-w-md mx-auto my-12 backdrop-blur-xl">
-            <Layers className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-            <h3 className="text-lg font-bold text-white mb-1">No services found</h3>
-            <p className="text-xs text-slate-400 mb-4 font-mono">
-              No matching endpoints for query "{searchQuery}".
-            </p>
-            <button
-              onClick={() => {
-                setSearchQuery('')
-                setSelectedCategory('all')
-              }}
-              className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold font-mono transition"
-            >
-              Reset Filters
-            </button>
+          /* Exact Mockup A Cyber Command Deck Grid */
+          <div className="space-y-5 sm:space-y-6 flex-1">
+            {/* Top Row: Media Hub (6 cols) + Alpha Crucible (3 cols) + Central Union Hub (3 cols) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+              <div className="lg:col-span-6">
+                <MediaHubHeroCard app={getApp('media-hub')} />
+              </div>
+              <div className="lg:col-span-3">
+                <TradingCandleCard app={getApp('alpha-crucible')} />
+              </div>
+              <div className="lg:col-span-3">
+                <ChurchRosterCard app={getApp('cucoc-hub')} />
+              </div>
+            </div>
+
+            {/* Middle Row: Jellyfin Movies (4 cols) + Audiobookshelf (4 cols) + RomM Retro Games (4 cols) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6">
+              <div className="lg:col-span-4">
+                <JellyfinPosterCard app={getApp('jellyfin-movies')} />
+              </div>
+              <div className="lg:col-span-4">
+                <AudiobookshelfCard app={getApp('audiobookshelf')} />
+              </div>
+              <div className="lg:col-span-4 md:col-span-2">
+                <RommConsoleCard app={getApp('romm-games')} />
+              </div>
+            </div>
+
+            {/* Bottom Subsystems Deck Header */}
+            <div className="pt-2 flex items-center justify-between border-t border-slate-800/80">
+              <div className="flex items-center gap-2 text-slate-400 font-mono text-xs">
+                <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="uppercase tracking-wider text-slate-300 font-semibold">
+                  Extended Subsystems &amp; Services
+                </span>
+                <span className="text-slate-500">• 6 Active Service Endpoints</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-emerald-400 font-mono text-xs">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>ALL SYSTEMS SECURE</span>
+              </div>
+            </div>
+
+            {/* Secondary Services Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {secondaryApps.map(app => (
+                <CyberAppCard key={app.id} app={app} />
+              ))}
+            </div>
           </div>
         )}
-      </main>
 
-      {/* Footer */}
-      <footer className="mt-auto border-t border-cyan-500/20 bg-[#060911]/95 py-6 text-xs font-mono text-slate-400 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        {/* Footer */}
+        <footer className="mt-8 pt-4 border-t border-slate-800/80 text-xs font-mono text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded-lg bg-cyan-950 border border-cyan-500/50 flex items-center justify-center font-bold text-[10px] text-cyan-400">
-              P
-            </div>
-            <span>© 2026 PharrLabs Command Deck. All systems nominal.</span>
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-slate-400">© 2026 PharrLabs Cyber Command Deck</span>
           </div>
-
           <div className="flex items-center gap-4 text-slate-400">
-            <span className="inline-flex items-center gap-1.5 text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              Cloudflare Pages Edge
-            </span>
+            <span>Cloudflare Edge Active</span>
             <span>•</span>
-            <span>Master PIN Protected (882400)</span>
+            <span>Local Umbrel Node: 192.168.7.22</span>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   )
 }
