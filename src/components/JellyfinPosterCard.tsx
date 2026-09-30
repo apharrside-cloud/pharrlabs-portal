@@ -8,31 +8,31 @@ interface JellyfinPosterCardProps {
 interface MoviePoster {
   title: string
   year: string
-  imageUrl: string
+  imagePath: string
 }
 
-// Real titles from Andrew's Jellyfin media library
+// 100% Real posters from Jellyfin & TMDB matching the titles exactly
 const MOVIES: MoviePoster[] = [
+  {
+    title: 'Interstellar',
+    year: '2014',
+    imagePath: '/posters/interstellar.jpg',
+  },
+  {
+    title: 'Dune',
+    year: '2021',
+    imagePath: '/posters/dune.jpg',
+  },
   {
     title: 'Blade Runner 2049',
     year: '2017',
-    imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80',
-  },
-  {
-    title: 'Tenet',
-    year: '2020',
-    imageUrl: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?w=600&auto=format&fit=crop&q=80',
-  },
-  {
-    title: 'Everything Everywhere',
-    year: '2022',
-    imageUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80',
+    imagePath: '/posters/blade_runner_2049.jpg',
   },
 ]
 
 export const JellyfinPosterCard: React.FC<JellyfinPosterCardProps> = ({ app }) => {
   return (
-    <div className="relative rounded-3xl bg-[#0C101A]/95 border-2 border-purple-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(192,132,252,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(192,132,252,0.35)]">
+    <div className="h-full rounded-3xl bg-[#0C101A]/95 border-2 border-purple-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(192,132,252,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(192,132,252,0.35)]">
       {/* Top Header Row */}
       <div className="flex items-center justify-between mb-4">
         <a
@@ -58,7 +58,7 @@ export const JellyfinPosterCard: React.FC<JellyfinPosterCardProps> = ({ app }) =
         </div>
       </div>
 
-      {/* 3 Vertical Movie Posters */}
+      {/* 3 Vertical Movie Posters with Real High-Res Art */}
       <div className="grid grid-cols-3 gap-3 my-auto">
         {MOVIES.map((movie, idx) => (
           <a
@@ -70,9 +70,10 @@ export const JellyfinPosterCard: React.FC<JellyfinPosterCardProps> = ({ app }) =
           >
             <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-800 group-hover/poster:border-purple-400/80 transition-all duration-300 shadow-md group-hover/poster:scale-[1.03]">
               <img
-                src={movie.imageUrl}
+                src={movie.imagePath}
                 alt={movie.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover/poster:scale-110"
+                loading="eager"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               {/* Cinematic Bottom Banner Title */}

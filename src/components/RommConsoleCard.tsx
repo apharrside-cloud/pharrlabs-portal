@@ -21,7 +21,7 @@ const CONSOLES: ConsoleCard[] = [
 
 export const RommConsoleCard: React.FC<RommConsoleCardProps> = ({ app }) => {
   return (
-    <div className="relative rounded-3xl bg-[#0C101A]/95 border-2 border-sky-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(56,189,248,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(56,189,248,0.35)]">
+    <div className="h-full rounded-3xl bg-[#0C101A]/95 border-2 border-sky-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(56,189,248,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(56,189,248,0.35)]">
       {/* Top Header Row */}
       <div className="flex items-center justify-between mb-4">
         <a

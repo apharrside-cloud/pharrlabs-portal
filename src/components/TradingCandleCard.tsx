@@ -8,7 +8,7 @@ interface TradingCandleCardProps {
 
 export const TradingCandleCard: React.FC<TradingCandleCardProps> = ({ app }) => {
   return (
-    <div className="relative rounded-3xl bg-[#0C101A]/95 border-2 border-indigo-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(129,140,248,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(129,140,248,0.35)]">
+    <div className="h-full rounded-3xl bg-[#0C101A]/95 border-2 border-indigo-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(129,140,248,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(129,140,248,0.35)]">
       {/* Top Header Row */}
       <div className="flex items-center justify-between mb-3">
         <a
@@ -32,8 +32,8 @@ export const TradingCandleCard: React.FC<TradingCandleCardProps> = ({ app }) => 
         </div>
       </div>
 
-      {/* Candlestick Chart Area (Live BTC/USD) */}
-      <div className="relative w-full h-36 bg-[#080B12]/80 rounded-2xl border border-slate-800/80 p-2.5 mb-3.5 flex overflow-hidden">
+      {/* Candlestick Chart Area (Live Coinbase Data) */}
+      <div className="relative w-full flex-1 min-h-[140px] bg-[#080B12]/80 rounded-2xl border border-slate-800/80 p-2.5 mb-3.5 flex overflow-hidden">
         {/* Top-Right Mini Pill */}
         <div className="absolute top-2 right-16 z-10">
           <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 border border-emerald-500/60 text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-0.5">
@@ -116,7 +116,7 @@ export const TradingCandleCard: React.FC<TradingCandleCardProps> = ({ app }) => 
           <span className="text-emerald-400 font-semibold text-[11px]">+1.19% ^</span>
         </div>
 
-        <div className="pt-1.5 space-y-1 text-[11px]">
+        <div className="pt-1.5 space-y-1.5 text-[11px]">
           <div className="flex items-center justify-between">
             <span className="text-slate-400">SOL/USD</span>
             <span className="text-emerald-400 font-medium">+17.8% PnL</span>

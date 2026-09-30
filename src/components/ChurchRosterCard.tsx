@@ -8,43 +8,49 @@ interface ChurchRosterCardProps {
 interface MemberRow {
   name: string
   role: string
-  avatar: string
+  initials: string
+  colorClass: string
 }
 
-// Real Central Union worship & ministerial leadership
+// Exact August 2, 2026 Central Union Worship Assignments & Leadership
 const ROSTER_MEMBERS: MemberRow[] = [
   {
     name: 'Mark Casella',
-    role: 'Preacher & Minister',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80',
+    role: 'Preacher & Sermon',
+    initials: 'MC',
+    colorClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
   },
   {
     name: 'Scott Slauson',
-    role: 'Song & Worship Leader',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80',
+    role: 'Song Leader',
+    initials: 'SS',
+    colorClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
   },
   {
     name: 'Chance Hornbeck',
-    role: "Lord's Supper Leader",
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&auto=format&fit=crop&q=80',
+    role: "Lord's Supper (Preside)",
+    initials: 'CH',
+    colorClass: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
   },
   {
     name: 'Kevin Kitchen',
-    role: 'Back Server & Deacon',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&auto=format&fit=crop&q=80',
+    role: "Back Server (Lord's Supper)",
+    initials: 'KK',
+    colorClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
   },
   {
     name: 'Andrew Pharr',
-    role: 'Sunday Tech Ministry',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80',
+    role: "Back Server & Media",
+    initials: 'AP',
+    colorClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
   },
 ]
 
 export const ChurchRosterCard: React.FC<ChurchRosterCardProps> = ({ app }) => {
   return (
-    <div className="relative rounded-3xl bg-[#0C101A]/95 border-2 border-amber-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(251,191,36,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(251,191,36,0.35)]">
+    <div className="h-full rounded-3xl bg-[#0C101A]/95 border-2 border-amber-400 p-5 sm:p-6 shadow-[0_0_30px_rgba(251,191,36,0.22)] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(251,191,36,0.35)]">
       {/* Top Header Row */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-2">
         <a
           href={app.url}
           target="_blank"
@@ -69,11 +75,11 @@ export const ChurchRosterCard: React.FC<ChurchRosterCardProps> = ({ app }) => {
       </div>
 
       {/* Roster Table */}
-      <div className="flex-1 flex flex-col justify-center">
+      <div className="flex-1 flex flex-col justify-around py-1">
         {/* Table Header */}
         <div className="grid grid-cols-12 text-xs font-semibold text-slate-400 pb-2 border-b border-slate-800 px-1">
           <span className="col-span-6">Ministry Member</span>
-          <span className="col-span-4 text-center">Role</span>
+          <span className="col-span-4 text-center">Worship Role</span>
           <span className="col-span-2 text-right">Active</span>
         </div>
 
@@ -81,13 +87,11 @@ export const ChurchRosterCard: React.FC<ChurchRosterCardProps> = ({ app }) => {
         <div className="divide-y divide-slate-800/60 font-sans">
           {ROSTER_MEMBERS.map((member, idx) => (
             <div key={idx} className="grid grid-cols-12 items-center py-2 px-1 hover:bg-slate-900/40 transition">
-              {/* Member with Avatar */}
+              {/* Member with Monogram Badge */}
               <div className="col-span-6 flex items-center gap-2">
-                <img
-                  src={member.avatar}
-                  alt={member.name}
-                  className="w-6 h-6 rounded-full object-cover border border-slate-700 shrink-0"
-                />
+                <div className={`w-6 h-6 rounded-full border flex items-center justify-center text-[10px] font-bold font-mono shrink-0 shadow-sm ${member.colorClass}`}>
+                  {member.initials}
+                </div>
                 <span className="text-xs font-medium text-slate-200 truncate" title={member.name}>
                   {member.name}
                 </span>
@@ -100,7 +104,7 @@ export const ChurchRosterCard: React.FC<ChurchRosterCardProps> = ({ app }) => {
 
               {/* Active Status Dot */}
               <div className="col-span-2 flex justify-end items-center pr-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
               </div>
             </div>
           ))}

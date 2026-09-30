@@ -160,27 +160,27 @@ export function App() {
           /* Exact Mockup A Cyber Command Deck Grid */
           <div className="space-y-5 sm:space-y-6 flex-1">
             {/* Top Row: Media Hub (6 cols) + Alpha Crucible (3 cols) + Central Union Hub (3 cols) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
-              <div className="lg:col-span-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+              <div className="lg:col-span-6 h-full flex flex-col">
                 <MediaHubHeroCard app={getApp('media-hub')} />
               </div>
-              <div className="lg:col-span-3">
+              <div className="lg:col-span-3 h-full flex flex-col">
                 <TradingCandleCard app={getApp('alpha-crucible')} />
               </div>
-              <div className="lg:col-span-3">
+              <div className="lg:col-span-3 h-full flex flex-col">
                 <ChurchRosterCard app={getApp('cucoc-hub')} />
               </div>
             </div>
 
             {/* Middle Row: Jellyfin Movies (4 cols) + Audiobookshelf (4 cols) + RomM Retro Games (4 cols) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6">
-              <div className="lg:col-span-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+              <div className="lg:col-span-4 h-full flex flex-col">
                 <JellyfinPosterCard app={getApp('jellyfin-movies')} />
               </div>
-              <div className="lg:col-span-4">
+              <div className="lg:col-span-4 h-full flex flex-col">
                 <AudiobookshelfCard app={getApp('audiobookshelf')} />
               </div>
-              <div className="lg:col-span-4 md:col-span-2">
+              <div className="lg:col-span-4 md:col-span-2 h-full flex flex-col">
                 <RommConsoleCard app={getApp('romm-games')} />
               </div>
             </div>
