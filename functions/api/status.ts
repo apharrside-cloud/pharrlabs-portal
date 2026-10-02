@@ -10,6 +10,7 @@ const PROBES: Probe[] = [
   { id: 'romm-games',       url: 'https://games.pharrlabs.com/api/heartbeat' },
   { id: 'booklore',         url: 'https://books.pharrlabs.com/' },
   { id: 'umbrel-dashboard', url: 'https://umbrel.pharrlabs.com/' }, // 302 to Cloudflare Access = protected and up
+  { id: 'agents-hub',       url: 'https://agents.pharrlabs.com/' }, // 200/302 Cloudflare Access = protected and up
 ]
 
 async function probe(p: Probe) {

@@ -11,7 +11,7 @@ import { RommConsoleCard } from './components/RommConsoleCard'
 import { CyberAppCard } from './components/CyberAppCard'
 import { useServiceStatus } from './lib/useServiceStatus'
 
-const SECONDARY_IDS = ['family-hub', 'booklore', 'umbrel-dashboard', 'super-cos', 'bible-library', 'growing-up-wild']
+const SECONDARY_IDS = ['agents-hub', 'family-hub', 'booklore', 'umbrel-dashboard', 'super-cos', 'bible-library', 'growing-up-wild']
 const SESSION_KEY = 'pharrlabs_auth_session'
 
 function readSession(): boolean {
